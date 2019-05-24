@@ -1,0 +1,36 @@
+﻿@using ProjectTaskManagement.Models.DataAccess.Entity
+@using ProjectTaskManagement.Models.DataAccess
+@model Task
+@{
+    if (Model.Employee != null
+        &&
+        Model.Employee.FirstName == ViewBag.UserFirstName
+        &&
+        ((ViewBag.CurrentRole == RoleType.SoftwareDeveloper.ToString()
+        && (Model.Status == TaskStatus.WillBeDeveloped
+            || Model.Status == TaskStatus.Started))
+        ||
+        (ViewBag.CurrentRole == RoleType.TestSpecialist.ToString()
+        && (Model.Status == TaskStatus.WillBeTested
+            || Model.Status == TaskStatus.Started))
+        ||
+        (ViewBag.CurrentRole == RoleType.BusinessAnalyst.ToString()
+        && (Model.Status == TaskStatus.Pending
+            || Model.Status == TaskStatus.Started
+            || Model.Status == TaskStatus.WillBeAnalized))
+        ))
+    {
+        if (Model.Status == TaskStatus.Started)
+        {
+            if (ViewBag.CurrentRole == RoleType.TestSpecialist.ToString())
+            {
+                @Html.ActionLink("Geri Gönder", "BackTheTask", new { id = Model.TaskId }) @: |
+            }
+            @Html.ActionLink("Bitir", "EndTheTask", new { id = Model.TaskId }) @: |
+        }
+        else
+        {
+            @Html.ActionLink("Başla", "BeginTheTask", new { id = Model.TaskId }) @: |
+        }
+    }
+}

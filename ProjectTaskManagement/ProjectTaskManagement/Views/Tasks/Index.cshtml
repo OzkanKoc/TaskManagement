@@ -1,0 +1,99 @@
+﻿@using ProjectTaskManagement.Models.DataAccess
+@using ProjectTaskManagement.Models.DataAccess.Entity
+@model IEnumerable<Task>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-light">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @{
+                    if (item.EmployeeId == null && (
+                        (ViewBag.CurrentRole == RoleType.TeamLeader.ToString())
+                        ||
+                        (ViewBag.CurrentRole == RoleType.BusinessAnalyst.ToString() &&
+                        item.Status == TaskStatus.Pending)
+                        ))
+                    {
+                        @Html.ActionLink("Çalışan Ata", "AssingToEmployee", new { id = item.TaskId })
+                    }
+                    else if (item.EmployeeId == null)
+                    {
+                        @Html.ActionLink("Görevi Üstlen", "TakeTheTask", new { id = item.TaskId })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Employee.FirstName);
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndingDate)
+            </td>
+            <td>
+                <span>
+                    @Html.Partial("_TaskStatusEditPartial", item)
+                </span>
+            </td>
+            <td>
+                @Html.Partial("_TaskStatusPartial", item)
+                @Html.ActionLink("Edit", "Edit", new { id = item.TaskId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TaskId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TaskId })
+            </td>
+        </tr>
+    }
+
+</table>

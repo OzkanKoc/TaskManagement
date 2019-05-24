@@ -1,0 +1,42 @@
+﻿@model ProjectTaskManagement.Models.DataAccess.Entity.CustomerDemand
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CustomerDemand</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Demand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Demand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DemandType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DemandType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerDemandId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

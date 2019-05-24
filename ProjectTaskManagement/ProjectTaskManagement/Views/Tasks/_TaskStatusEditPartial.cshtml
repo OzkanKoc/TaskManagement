@@ -1,0 +1,17 @@
+﻿@model ProjectTaskManagement.Models.DataAccess.Entity.Task
+
+
+@if (ViewBag.CurrentRole == ProjectTaskManagement.Models.DataAccess.RoleType.TeamLeader.ToString()
+    ||
+    ViewBag.CurrentRole == ProjectTaskManagement.Models.DataAccess.RoleType.BusinessAnalyst.ToString())
+{
+    <a href="@Url.Action("EditStatus",new { id =Model.TaskId})">
+        @Html.DisplayFor(t => t.Status)
+        <i class="fas fa-edit"></i>
+    </a>
+}
+else
+{
+    @Html.DisplayFor(t => t.Status)
+}
+

@@ -1,0 +1,35 @@
+﻿@{
+    var userName = string.Empty;
+    var userRole = string.Empty;
+    var UserId = string.Empty;
+    if (TempData.ContainsKey("UserInfo"))
+    {
+        userName = ((List<string>)TempData["UserInfo"])[0];
+        userRole = ((List<string>)TempData["UserInfo"])[1];
+        UserId = ((List<string>)TempData["UserInfo"])[2];
+        TempData["UserInfo"] = new List<string>() { userName, userRole, UserId };
+    }
+}
+<a class="nav-link dropdown-toggle waves-effect waves-light nav-user m-r-15" data-toggle="dropdown" href="#" role="button"
+   aria-haspopup="false" aria-expanded="false">
+    <img src="~/assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+    <span class="ml-3">@userName</span>
+</a>
+<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+    <!-- item-->
+    <a href="javascript:void(0);" class="dropdown-item notify-item">
+        <span class="ml-3">@userRole</span>
+    </a>
+    <!-- item-->
+    <a href="@Url.Action("Details","Employee",new { id = UserId})" class="dropdown-item notify-item">
+        <i class="ti-user m-r-5"></i> Profile
+    </a>
+
+    <!-- item-->
+    <a href="@Url.Action("Logout","Account")" class="dropdown-item notify-item">
+        <i class="ti-power-off m-r-5"></i> Logout
+    </a>
+    <a href="@Url.Action("Register","ProjectManager")" class="dropdown-item notify-item">
+        <i class="ti-power-off m-r-5"></i> Register
+    </a>
+</div>

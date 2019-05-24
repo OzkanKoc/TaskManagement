@@ -1,0 +1,33 @@
+﻿@model ProjectTaskManagement.Models.DataAccess.Entity.Task
+@{
+    ViewBag.Title = "AssingToEmployee";
+}
+
+<h2>Çalışan Atama</h2>
+
+<form method="post" class="form-horizontal">
+    <input type="hidden" name="TaskId" value="@Model.TaskId" />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Employee, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select name="EmployeeId" class="form-control employee_dropdown">
+                @{
+                    int i = 0;
+                    foreach (var item in ViewBag.EmployeeList)
+                    {
+                        <option value=@(item.EmployeeId)>
+                            @item.FirstName @item.LastName - @(((List<string>)ViewBag.EmployeeRoles)[(i++)])
+                        </option>
+
+                    }
+                }
+            </select>
+            @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Assign" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
